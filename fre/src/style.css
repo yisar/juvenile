@@ -1,0 +1,53 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+body {
+  color: #242e42;
+  background: #eff4f9;
+  font-size: 16px;
+}
+
+.iconfont {
+  font-size: 20px;
+}
+
+a {
+  color: #55bc8a;
+  text-decoration: none;
+}
+
+.gitlab {
+  background: #36435c;
+  color: #fff;
+  padding: 10px;
+  border-radius: 20px;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  width: 200px;
+  justify-content: center;
+  margin-left: auto;
+}
+
+.gitlab i {
+  margin-right: 10px;
+}
+
+.bio {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  width: 100px;
+}
+
+.bio img{
+  height: 50px;
+  border-radius: 25px;
+  margin: 10px;
+}

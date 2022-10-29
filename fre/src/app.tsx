@@ -1,19 +1,36 @@
 import { render, useState, h, useEffect, useRef } from 'fre';
+import { getUser } from './api';
+import Cookie from 'js-cookie';
+import './style.css';
+
+let token = Cookie.get('gitlab-token');
 
 function App() {
-  const [evnet, setEvent] = useState('');
-  const t = useRef(null);
-
+  const [user, setUser] = useState({} as any);
   useEffect(() => {
-    const source = new EventSource('http://localhost:8000/events/');
-    source.onmessage = function (e) {
-      // setEvent(e.data as any);
-      const log = document.createElement('li');
-      log.textContent = e.data
-      t.current.appendChild(log);
-    };
+    getUser().then((data) => {
+      let { username, avatar_url } = data as any;
+      console.log(data);
+      setUser({ username, avatar_url });
+    });
   }, []);
+  return (
+    <div>
+      {token ? (
+        <ul class='bio'>
+          {/* <li>{user.username}, </li> */}
 
-  return <pre ref={t}>{evnet}</pre>;
+          <li>
+            <img src={user.avatar_url} alt='' />
+          </li>
+        </ul>
+      ) : (
+        <a href='http://localhost:4000/login' class='gitlab'>
+          <i class='iconfont icon-gitlab-line'></i>
+          使用 gitlab 登陆
+        </a>
+      )}
+    </div>
+  );
 }
 render(<App />, document.getElementById('app'));

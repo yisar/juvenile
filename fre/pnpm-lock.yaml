@@ -2,10 +2,12 @@ lockfileVersion: 5.4
 
 specifiers:
   fre: ^2.5.5
+  js-cookie: ^3.0.1
   vite: ^3.2.1
 
 dependencies:
   fre: 2.5.5
+  js-cookie: 3.0.1
   vite: 3.2.1
 
 packages:
@@ -1199,6 +1201,11 @@ packages:
 
   /jpeg-js/0.4.4:
     resolution: {integrity: sha512-WZzeDOEtTOBK4Mdsar0IqEU5sMr3vSV2RqkAIzUEV2BHnUfKGyswWFPFwK5EeDo93K3FohSHbLAjj0s1Wzd+dg==}
+    dev: false
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
     dev: false
 
   /kleur/4.1.5:

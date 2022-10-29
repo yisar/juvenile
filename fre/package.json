@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "fre": "^2.5.5",
+    "js-cookie": "^3.0.1",
     "vite": "^3.2.1"
   }
 }

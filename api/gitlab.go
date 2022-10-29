@@ -44,9 +44,9 @@ func Callback(w http.ResponseWriter, r *http.Request) {
 	}
 	fmt.Println(gitlabToken)
 
-	c1 := http.Cookie{Name: "gitlab-token", Value: gitlabToken.AccessToken, HttpOnly: true, MaxAge: 7200, Path: "/", SameSite: 4, Secure: true}
+	c1 := http.Cookie{Name: "gitlab-token", Value: gitlabToken.AccessToken, HttpOnly: false, MaxAge: 7200, Path: "/", SameSite: 4, Secure: true}
 	w.Header().Add("Set-Cookie", c1.String())
 
-	http.Redirect(w, r, "/", 302)
+	http.Redirect(w, r, "http://localhost:3000/", 302)
 
 }
