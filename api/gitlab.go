@@ -1,5 +1,3 @@
 package api
 
-func Login(){
-	
-}
+// 代理 gitlab 接口
