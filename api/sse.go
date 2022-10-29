@@ -9,10 +9,10 @@ import(
 // sse 用于日志流传输，使用 channel 定时往 client 端传输消息
 
 type Broker struct {
-	clients        map[chan string]bool
-	newClients     chan chan string
-	defunctClients chan chan string
-	messages       chan string
+	Clients        map[chan string]bool
+	NewClients     chan chan string
+	DefunctClients chan chan string
+	Messages       chan string
 }
 
 func (b *Broker) Start() {
@@ -22,20 +22,20 @@ func (b *Broker) Start() {
 		for {
 			select {
 
-			case s := <-b.newClients:
-				b.clients[s] = true
+			case s := <-b.NewClients:
+				b.Clients[s] = true
 				log.Println("Added new client")
 
-			case s := <-b.defunctClients:
-				delete(b.clients, s)
+			case s := <-b.DefunctClients:
+				delete(b.Clients, s)
 				close(s)
 				log.Println("Removed client")
 
-			case msg := <-b.messages:
-				for s := range b.clients {
+			case msg := <-b.Messages:
+				for s := range b.Clients {
 					s <- msg
 				}
-				log.Printf("Broadcast message to %d clients", len(b.clients))
+				log.Printf("Broadcast message to %d Clients", len(b.Clients))
 			}
 		}
 	}()
@@ -50,12 +50,12 @@ func (b *Broker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	messageChan := make(chan string)
-	b.newClients <- messageChan
+	b.NewClients <- messageChan
 
 	notify := w.(http.CloseNotifier).CloseNotify()
 	go func() {
 		<-notify
-		b.defunctClients <- messageChan
+		b.DefunctClients <- messageChan
 		log.Println("HTTP connection just closed.")
 	}()
 
@@ -63,6 +63,7 @@ func (b *Broker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Cache-Control", "no-cache")
 	w.Header().Set("Connection", "keep-alive")
 	w.Header().Set("Transfer-Encoding", "chunked")
+	w.Header().Add("Access-Control-Allow-Origin", "*")
 
 	for {
 		msg, open := <-messageChan
