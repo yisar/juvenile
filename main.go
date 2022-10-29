@@ -33,7 +33,7 @@ func main() {
 	b.Start()
 
 	http.Handle("/events/", &b)
-	http.Handle("/login", api.Login())
+	http.Handle("/login", http.HandlerFunc(api.Login))
 	http.Handle("/gitlab-callback", http.HandlerFunc(api.Callback))
 
 	// go func() {

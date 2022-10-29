@@ -14,14 +14,14 @@ type GitlabToken struct {
 
 // 代理 gitlab 接口
 
-func Login() http.Handler {
+func Login(w http.ResponseWriter, r *http.Request) {
 	v := url.Values{}
 	v.Add("client_id", "712f0fa4c635f752f4efb99e7c0a8f90f6db97f8bb56f0f7fef3325e4b7659c5")
 	v.Add("redirect_uri", "http://localhost:4000/gitlab-callback")
 	v.Add("response_type", "code")
 	v.Add("state", "12345")
 	v.Add("scope", "api")
-	return http.RedirectHandler("https://gitlab.com/oauth/authorize?"+v.Encode(), 302)
+	http.Redirect(w, r, "https://gitlab.com/oauth/authorize?"+v.Encode(), 302)
 }
 
 func Callback(w http.ResponseWriter, r *http.Request) {
