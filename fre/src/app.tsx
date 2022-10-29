@@ -15,35 +15,38 @@ function App() {
       setUser({ username, avatar_url });
     });
   }, []);
-  useEffect(()=>{
+  useEffect(() => {
     const source = new EventSource('http://localhost:4000/events/');
-    console.log('链接成功')
+    console.log('链接成功');
     source.onmessage = function (e) {
-      console.log(e)
       const log = document.createElement('li');
       log.textContent = e.data;
       t.current.appendChild(log);
     };
-  },[])
+  }, []);
 
   const sse = () => {
-    dockerV().then(res=>{
-      console.log(res)
-    })
+    dockerV().then((res) => {
+      // console.log(res)
+    });
   };
   return (
     <div>
       {token ? (
         <div>
-          <ul class='bio'>
-            {/* <li>{user.username}, </li> */}
-
-            <li>
-              <img src={user.avatar_url} alt='' />
-            </li>
-          </ul>
-          <button onclick={sse}>链接 docker</button>
-          <pre ref={t}></pre>
+          <header>
+            <button onclick={sse} class='new'>
+              新建项目
+            </button>
+            <ul class='bio'>
+              <li>
+                <img src={user.avatar_url} alt='' />
+              </li>
+            </ul>
+          </header>
+          <main>
+            <pre ref={t}></pre>
+          </main>
         </div>
       ) : (
         <div>

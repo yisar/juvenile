@@ -22,7 +22,7 @@ a {
   text-decoration: none;
 }
 
-.gitlab {
+.gitlab, .new {
   background: #36435c;
   color: #fff;
   padding: 10px;
@@ -34,6 +34,8 @@ a {
   justify-content: center;
   margin-left: auto;
 }
+
+
 
 .gitlab i {
   margin-right: 10px;
@@ -50,4 +52,26 @@ a {
   height: 50px;
   border-radius: 25px;
   margin: 10px;
+}
+header {
+  display: flex;
+}
+
+.new{
+  background: #55bc8a;
+  cursor: pointer;
+}
+
+button {
+  border: 0px;
+}
+
+pre{
+  background: #242e42;
+  color: #eff4f9;
+  padding: 20px;
+  width: 1000px;
+  margin: 30px auto;
+  border-radius: 10px;
+  min-height: 70vh;
 }
