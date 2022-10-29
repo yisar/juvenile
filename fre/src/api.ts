@@ -12,3 +12,9 @@ export async function getUser() {
 
   return data
 }
+
+export async function dockerV() {
+  const v = await fetch('http://localhost:4000/health')
+
+  return v
+}

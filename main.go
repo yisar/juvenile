@@ -9,6 +9,7 @@ import (
 func middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// fmt.Println("前置操作")
+		w.Header().Add("Access-Control-Allow-Origin", "*")
 		next.ServeHTTP(w, r)
 		// fmt.Println("后置操作")
 	})
@@ -35,16 +36,7 @@ func main() {
 	http.Handle("/events/", &b)
 	http.Handle("/login", http.HandlerFunc(api.Login))
 	http.Handle("/gitlab-callback", http.HandlerFunc(api.Callback))
+	http.Handle("/health", middleware(http.HandlerFunc(api.DockerV(b))))
 
-	// go func() {
-	// 	for i := 0; ; i++ {
-
-	// 		b.Messages <- fmt.Sprintf("%d - the time is %v", i, time.Now())
-
-	// 		log.Printf("Sent message %d ", i)
-	// 		time.Sleep(2e9)
-
-	// 	}
-	// }()
 	http.ListenAndServe(":4000", nil)
 }
