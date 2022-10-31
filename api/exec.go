@@ -8,9 +8,9 @@ import (
 	"os/exec"
 )
 
-func Exec(a string, b string) string {
+func Exec(a string, b ...string) string {
 
-	cmd := exec.Command(a, b)
+	cmd := exec.Command(a, b...)
 	cmd.Stdin = os.Stdin
 
 	var output string
