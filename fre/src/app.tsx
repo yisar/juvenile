@@ -36,7 +36,7 @@ function App() {
         <div>
           <header>
             <button onclick={sse} class='new'>
-              新建项目
+              get docker version
             </button>
             <ul class='bio'>
               <li>
