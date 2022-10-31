@@ -1,0 +1,13 @@
+jobs:
+  build:
+    runs-on: node:16-alpine
+    steps:
+      - name: install
+      - run: |
+          yarn
+          ls -lh
+      - name: deploy
+        run: |
+          pwd
+          yarn build
+          ls -lh
