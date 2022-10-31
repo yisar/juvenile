@@ -19,6 +19,7 @@ function App() {
     const source = new EventSource('http://localhost:4000/events/');
     console.log('链接成功');
     source.onmessage = function (e) {
+      console.log(e)
       const log = document.createElement('li');
       log.textContent = e.data;
       t.current.appendChild(log);
@@ -36,7 +37,7 @@ function App() {
         <div>
           <header>
             <button onclick={sse} class='new'>
-              get docker version
+              Start run
             </button>
             <ul class='bio'>
               <li>

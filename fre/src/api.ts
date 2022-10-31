@@ -17,7 +17,7 @@ export async function getUser() {
 }
 
 export async function dockerV() {
-  const v = await fetch('http://localhost:4000/health');
+  const v = await fetch('http://localhost:4000/prepare');
 
   return v;
 }

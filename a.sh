@@ -1,0 +1,1 @@
+docker run --name git -it -v /Users/yisar/repo/:/vite-project/ -v /Users/yisar/id_rsa:/root/.ssh/id_rsa -v /Users/yisar/id_rsa.pub:/root/.ssh/id_rsa.pub wuliangxue/git:0.1

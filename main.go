@@ -37,6 +37,7 @@ func main() {
 	http.Handle("/login", http.HandlerFunc(api.Login))
 	http.Handle("/gitlab-callback", http.HandlerFunc(api.Callback))
 	http.Handle("/health", middleware(http.HandlerFunc(api.Health)))
+	http.Handle("/prepare", middleware(http.HandlerFunc(api.Prepare)))
 
 	http.ListenAndServe(":4000", nil)
 }

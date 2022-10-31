@@ -6,11 +6,11 @@ import (
 
 
 func Health(w http.ResponseWriter, r *http.Request) {
-	output := Exec("docker", "-v")
+	Exec("docker", "-v")
 
-	GlobalChan.Messages <- output
+	// GlobalChan.Messages <- output
 
-	w.Write([]byte(output))
+	// w.Write([]byte(output))
 }
 
 // b.Messages <- output
