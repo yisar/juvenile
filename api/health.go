@@ -7,17 +7,12 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"sync"
-	"time"
 )
 
-func DockerV(b Broker) http.HandlerFunc {
+func DockerV() string {
 
 	cmd := exec.Command("docker", "-v")
 	cmd.Stdin = os.Stdin
-
-	var wg sync.WaitGroup
-	wg.Add(2)
 
 	var output string
 
@@ -28,7 +23,6 @@ func DockerV(b Broker) http.HandlerFunc {
 	}
 	readout := bufio.NewReader(stdout)
 	go func() {
-		defer wg.Done()
 		output += GetOutput(readout)
 	}()
 
@@ -39,22 +33,14 @@ func DockerV(b Broker) http.HandlerFunc {
 	}
 	readerr := bufio.NewReader(stderr)
 	go func() {
-		defer wg.Done()
 		output += GetOutput(readerr)
 	}()
 
 	cmd.Run()
-	wg.Wait()
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "hello world")
-		go func() {
-			for i := 0; ; i++ {
-				b.Messages <- output
-				time.Sleep(3e9)
-			}
-		}()
-	})
+
+	return output
 }
+
 func GetOutput(reader *bufio.Reader) string {
 	var sumOutput string
 	outputBytes := make([]byte, 200)
@@ -74,3 +60,13 @@ func GetOutput(reader *bufio.Reader) string {
 	}
 	return sumOutput
 }
+
+func Health(w http.ResponseWriter, r *http.Request) {
+	output := DockerV()
+
+	GlobalChan.Messages <- output
+
+	w.Write([]byte(output))
+}
+
+// b.Messages <- output

@@ -24,19 +24,19 @@ func main() {
 
 	http.Handle("/", middleware(http.HandlerFunc(root)))
 
-	b := api.Broker{
+	api.GlobalChan = api.Broker{
 		Clients:        make(map[chan string]bool),
 		NewClients:     make(chan (chan string)),
 		DefunctClients: make(chan (chan string)),
 		Messages:       make(chan string),
 	}
 
-	b.Start()
+	api.GlobalChan.Start()
 
-	http.Handle("/events/", &b)
+	http.Handle("/events/", &api.GlobalChan)
 	http.Handle("/login", http.HandlerFunc(api.Login))
 	http.Handle("/gitlab-callback", http.HandlerFunc(api.Callback))
-	http.Handle("/health", middleware(http.HandlerFunc(api.DockerV(b))))
+	http.Handle("/health", middleware(http.HandlerFunc(api.Health)))
 
 	http.ListenAndServe(":4000", nil)
 }

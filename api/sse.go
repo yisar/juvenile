@@ -1,9 +1,9 @@
 package api
 
-import(
-	"net/http"
-	"log"
+import (
 	"fmt"
+	"log"
+	"net/http"
 )
 
 // sse 用于日志流传输，使用 channel 定时往 client 端传输消息
@@ -15,22 +15,19 @@ type Broker struct {
 	Messages       chan string
 }
 
+var GlobalChan Broker
+
 func (b *Broker) Start() {
-
 	go func() {
-
 		for {
 			select {
-
 			case s := <-b.NewClients:
 				b.Clients[s] = true
 				log.Println("Added new client")
-
 			case s := <-b.DefunctClients:
 				delete(b.Clients, s)
 				close(s)
 				log.Println("Removed client")
-
 			case msg := <-b.Messages:
 				for s := range b.Clients {
 					s <- msg
@@ -72,7 +69,6 @@ func (b *Broker) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		fmt.Fprintf(w, "data: Message: %s\n\n", msg)
-
 		f.Flush()
 	}
 	log.Println("Finished HTTP request at ", r.URL.Path)
