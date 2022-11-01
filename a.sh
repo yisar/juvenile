@@ -1,1 +1,2 @@
-docker run --name git -it -v /Users/yisar/repo/:/vite-project/ -v /Users/yisar/id_rsa:/root/.ssh/id_rsa -v /Users/yisar/id_rsa.pub:/root/.ssh/id_rsa.pub wuliangxue/git:0.1
+docker run --name git -it -v /Users/yisar/repo/:/git/repo -v /Users/yisar/id_rsa:/root/.ssh/id_rsa -v /Users/yisar/id_rsa.pub:/root/.ssh/id_rsa.pub wuliangxue/git:0.1
+docker run -id -p 3306:3306 --name=mysql -v /Users/yisar/mysql/conf:/etc/mysql/conf.d -v /Users/yisar/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:latest
